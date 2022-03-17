@@ -17,7 +17,7 @@ export default function GoogleAuth() {
       }
       // fetch auth code to back: use axios.post()
       axios
-        .post('http://ec2-13-209-73-79.ap-northeast-2.compute.amazonaws.com:8080/auth/callback', {
+        .post('http://ec2-3-39-83-29.ap-northeast-2.compute.amazonaws.com:8080/auth/callback', {
           code,
           loginType: 'GOOGLE',
         })
