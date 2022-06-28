@@ -1,20 +1,27 @@
 import styled from 'styled-components';
-import GoogleLoginButton from '../presentational/GoogleLoginButton';
 import KakaoLoginButton from '../presentational/KakaoLoginButton';
+import GoogleLoginButton from '../presentational/GoogleLoginButton';
 import Logo from '../presentational/Logo';
-import { authorizeKakao, initializeKakao } from './kakao';
+import { useDispatch } from 'react-redux';
+import { signIn } from '../../../modules/login';
 
 export default function Login() {
+  const dispatch = useDispatch();
+
   return (
     <LoginPageLayout>
       <Logo></Logo>
-      <LayoutedKakao
-        login={() => {
-          initializeKakao();
-          authorizeKakao();
+      <LayoutedKakao href={`${process.env.REACT_APP_API}/auth/KAKAO`} />
+      <LayoutedGoogle href={`${process.env.REACT_APP_API}/auth/GOOGLE`} />
+      <button
+        onClick={() => {
+          // 개발용 로그인 스킵 버튼.
+          // set isLoggedIn True
+          dispatch(signIn('fakeToken', 'fakeUID'));
         }}
-      ></LayoutedKakao>
-      <LayoutedGoogle></LayoutedGoogle>
+      >
+        Skip
+      </button>
     </LoginPageLayout>
   );
 }

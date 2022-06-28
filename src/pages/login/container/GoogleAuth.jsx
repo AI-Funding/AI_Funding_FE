@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { signIn } from '../../../modules/login';
 import { setItem } from '../../../utils/cookies';
 
-export default function KakaoAuth() {
+export default function GoogleAuth() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ export default function KakaoAuth() {
       axios
         .post(`${process.env.REACT_APP_API}/auth/callback`, {
           code,
-          loginType: 'KAKAO',
+          loginType: 'GOOGLE',
         })
         .then((response) => {
           if (response.data.isExistUser === true) {
