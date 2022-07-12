@@ -1,28 +1,27 @@
-import styled from 'styled-components';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import styled, { keyframes } from 'styled-components';
+import { useState, useEffect, useRef } from 'react';
 import TradeRecord from '../components/TradeRecord';
 
-export default function TransHistory() {
-  const [selectedTerm, selectTerm] = useState(0);
+const selectBoxAnimation = keyframes`
+    0%{
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0px);
+    }
+`;
+
+export default function TransHistory(tradeInfo) {
   const [selectedAccount, setSelectedAccount] = useState(0);
   const [account, setAccount] = useState([]);
   const [tradeHistory, setTradeHistory] = useState([]);
+  const [selectBoxToggle, setSelectBoxToggle] = useState(0);
+
   useEffect(() => {
-    axios
-      .post('http://localhost:8070/', {
-        customer_info_id: 1,
-        login_type: '00',
-      })
-      .then((res) => {
-        //res로 백에서 데이터 정보가 넘어옴
-        setAccount(res.data.account);
-        setTradeHistory(res.data.account[selectedAccount].tradeHistory);
-        console.log("Change Account")
-      })
-      .catch((err) => {
-        console.log('AIpage_transhistory_axios_err');
-      });
+    setAccount(tradeInfo.data);
+    setTradeHistory(tradeInfo.data[selectedAccount].tradeHistory);
   }, [selectedAccount]);
 
   const holdingRecords = tradeHistory.map((history, index) => (
@@ -35,37 +34,44 @@ export default function TransHistory() {
         tradeAmount={history.tradeAmount}
         unitPrice={history.unitPrice}
         tradePrice={history.tradePrice}
+        toggleOFF={selectedAccount}
       />
     </div>
   ));
 
-  let accountSelctor;
+  let arrayOfSelectBox = [];
+  let accountSelector; //selectBox setting
   function setAccountSelector() {
     let accountSelector = [];
     for (let i = 0; i < account.length; i++) {
       accountSelector.push(
-        <option key={i} value={i}>
+        <StyledAccountlist key={i} value={i} onClick={(e) => setSelectedAccount(e.target.value)}>
           {account[i].accountName}
-        </option>
+        </StyledAccountlist>
       );
+      arrayOfSelectBox.push(account[i].accountName);
     }
     return accountSelector;
   }
-  accountSelctor = setAccountSelector();
+  accountSelector = setAccountSelector();
 
-  const selectingAccount = (e) => {
-    setSelectedAccount(e.target.value);
-  };
   return (
     <StyledHistoryContainer className="HistoryContainer">
-      <StyledSelectBox className="accountSelector">
-        <StyledSelect onChange={selectingAccount} value={selectedAccount}>
-          {accountSelctor}
-        </StyledSelect>
+      <StyledSelectBox className="selectBox">
+        <StyledAccountSelector>
+          <div className="selected" onClick={() => setSelectBoxToggle(~selectBoxToggle)}>
+            <div className="selectedAccount">{arrayOfSelectBox[selectedAccount]}</div>
+            <div className="arrow">▼</div>
+          </div>
+          <StyledUl
+            className={selectBoxToggle === -1 ? 'ul active' : 'ul'}
+            onClick={() => setSelectBoxToggle(~selectBoxToggle)}
+          >
+            {accountSelector}
+          </StyledUl>
+        </StyledAccountSelector>
       </StyledSelectBox>
-      <StyledScrollArea className="container">
-        {holdingRecords}
-      </StyledScrollArea>
+      <StyledScrollArea className="container">{holdingRecords}</StyledScrollArea>
     </StyledHistoryContainer>
   );
 }
@@ -73,87 +79,68 @@ export default function TransHistory() {
 const StyledScrollArea = styled.div`
   overflow: scroll;
   height: 95%;
+  margin-right: 5px;
+  margin-left: 5px;
 `;
 
 const StyledHistoryContainer = styled.div`
   height: 85vh;
-  margin: 10px;
+  margin: 0;
 `;
 
-const StyledTermSelector = styled.div`
-  margin: auto;
-`;
-
-const StyledType = styled.strong`
-  color: red;
-`;
-
-const StyledTermButton = styled.span`
-  font-weight: bold;
-  margin: 0 8px;
-  font-size: 1.1rem;
-  ${(props) => {
-    return props.className === 'selected'
-      ? `color: rgb(184, 168, 142)`
-      : `color: rgb(119, 119, 119)`;
-  }};
-`;
 const StyledSelectBox = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
-const StyledSelect = styled.select`
-  background: none;
+const StyledAccountSelector = styled.div`
+  width: 30%;
+  display: inline;
+  margin: 5px 10px 0 0;
+  float: right;
+  border-radius: 7px;
   color: white;
-  border: none;
-  font-size: 20px;
-  margin: 10px 10px 0px 10px;
-`;
 
-const StyledBar = styled.span`
-  font-weight: bold;
-  color: rgb(151, 151, 151);
-`;
-
-const StyledHistories = styled.div`
-  padding: 0 10px;
-`;
-
-const StyledDetails = styled.details`
-  & > summary {
-    color: white;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid rgb(184, 168, 142);
-    // 삼각형 제거
-    list-style: none;
+  .selected {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 5px;
   }
-  & > summary::marker {
+  .selectedAccount {
+    max-width: 100%;
+    font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .arrow {
+  }
+  .ul {
     display: none;
   }
-  transition: height 0.2s ease;
-  overflow: hidden;
-  &:not([open]) {
-    height: 5em;
-  }
-  &[open] {
-    height: 10.5em;
-  }
-  &[open] > summary {
-    border-bottom: 2px dashed rgb(119, 119, 119);
+  .ul.active {
+    display: initial;
   }
 `;
 
-const StyledDetailsContent = styled.div`
-  color: white;
-  margin: auto;
-  text-align: center;
-  font-size: 16px;
-  animation: details-show 200ms ease-in-out;
+const StyledUl = styled.ul`
+  list-style-type: none;
+  padding-left: 0px;
+  width: 30%;
+  position: absolute;
+  background: black;
+  margin: 1px 0 0 -1px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  animation: ${selectBoxAnimation} 0.2s ease-in-out;
+  z-index: 1;
 `;
-const StyledDetailsContainer = styled.div`
-  margin-top: 10px;
-  padding-bottom: 10px;
-  width: 100%;
-  border-bottom: 2px solid rgb(184, 168, 142);
+const StyledAccountlist = styled.li`
+  padding: 3px 5px;
+  margin: 0.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  :hover {
+    background: #888;
+    border-radius: 7px;
+  }
 `;
