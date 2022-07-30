@@ -21,7 +21,7 @@ const ProfitStyle = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 7vh;
+  height: 6vh;
 `;
 
 const ArrowStyle = styled.div`

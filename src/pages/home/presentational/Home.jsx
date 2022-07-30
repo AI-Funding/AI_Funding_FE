@@ -11,6 +11,7 @@ import 'swiper/css/pagination';
 /*페이지*/
 import MyAccount from './MyAccount';
 import Stocks from './Stocks';
+import CreateAccount from './CreateAccount';
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -23,7 +24,8 @@ export default function Home() {
   /*초기 마운트*/
   useEffect(() => {
     axios
-      .post(`${process.env.REACT_APP_API}/api/home`, {
+      .post('http://localhost:8080/', {
+        // .post(`${process.env.REACT_APP_API}/api/home`, {
         customer_info_id: 1,
         login_type: '00',
       })
@@ -43,7 +45,9 @@ export default function Home() {
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      setStock(accounts[accountNumber].stocks);
+      if (accountNumber < accounts.length) {
+        setStock(accounts[accountNumber].stocks);
+      }
     }
   }, [accountNumber]);
 
@@ -64,27 +68,48 @@ export default function Home() {
 
   return (
     <HomeStyle>
-      <Swiper
-        slidesPerView={1}
-        pagination={{
-          clickable: true,
-          type: 'bullets',
-          bulletClass: 'swiper-pagination-bullet swiper-pagination-bullet-custom',
-        }}
-        onSlideChange={(e) => {
-          setAccountNumber(e.activeIndex);
-        }}
-      >
-        {myAccountSlide}
-      </Swiper>
-
-      <Stocks stock={stock} account={accountNumber}></Stocks>
+      <AccountContainer>
+        <Swiper
+          slidesPerView={1}
+          pagination={{
+            clickable: true,
+            type: 'bullets',
+            bulletClass: 'swiper-pagination-bullet swiper-pagination-bullet-custom',
+          }}
+          onSlideChange={(e) => {
+            setAccountNumber(e.activeIndex);
+          }}
+        >
+          {myAccountSlide}
+          <SwiperSlide>
+            <CreateAccount />
+          </SwiperSlide>
+        </Swiper>
+      </AccountContainer>
+      <StockContainer>
+      <Stocks
+        stock={stock}
+        account={accountNumber}
+        isLast={accountNumber == accounts.length ? true : false}
+      />
+      </StockContainer>
     </HomeStyle>
   );
 }
 
 const HomeStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   flex-grow: 1;
   padding: 10px;
   color: white;
 `;
+
+const AccountContainer = styled.div`
+  
+`
+
+const StockContainer = styled.div`
+  
+`

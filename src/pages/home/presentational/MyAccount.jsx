@@ -4,7 +4,6 @@ import Profit from './Profit';
 
 export default function MyAccount(props) {
   return (
-    <div>
       <MyAccountStyle>
         <InfoRowStyle>
           <InfoStyle>{props.name || 'default'}&nbsp;</InfoStyle>님의&nbsp;&nbsp;
@@ -32,7 +31,6 @@ export default function MyAccount(props) {
           <Profit name="누적 수익금" value={props.totalProfit || '0'}></Profit>
         </ProfitColumnStyle>
       </MyAccountStyle>
-    </div>
   );
 }
 
@@ -45,7 +43,7 @@ const getStartDay = (createAt) => {
 
 /*스타일*/
 const MyAccountStyle = styled.div`
-  flex-grow: 1;
+  height: 60vh;
   border: 1px solid #b8a88e;
   border-radius: 10px;
   padding: 1vh 1vh 2vh 1vh;
@@ -55,6 +53,7 @@ const MyAccountStyle = styled.div`
 const InfoRowStyle = styled.div`
   display: flex;
   align-items: center;
+  flex-grow: 0;
   font-size: 16px;
   font-weight: 300;
 `;

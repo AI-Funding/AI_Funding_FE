@@ -1,6 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 import SpoqaHanSansNeo from '../fonts/spoqa/SpoqaHanSansNeo-Regular.woff2';
 import SpoqaHanSansNeoThin from '../fonts/spoqa/SpoqaHanSansNeo-Thin.woff2';
+import SpoqaHanSansNeoBold from '../fonts/spoqa/SpoqaHanSansNeo-Bold.woff2';
+
 const GlobalStyle = createGlobalStyle`
     @font-face {
         font-family: "Spoqa Han Sans Neo";
@@ -9,8 +11,12 @@ const GlobalStyle = createGlobalStyle`
 
     @font-face {
       font-family: "Spoca Han Sans Neo";
-      font-weight: 200;
       src: url(${SpoqaHanSansNeoThin});
+    }
+
+    @font-face {
+      font-family: "Spoca Han Sans Neo";
+      src: url(${SpoqaHanSansNeoBold});
     }
 
     * {
