@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export default function Profit(props) {
   return (
     <ProfitStyle>
-      <div>{props.name}</div>
+      <ProfitTitle>{props.name}</ProfitTitle>
       <ValueStyle border={props.border}>
         <ArrowStyle color={props.value}>
           {(Number(props.value) > 0 ? '▲' : '▼') || '-'}&nbsp;
@@ -23,6 +23,10 @@ const ProfitStyle = styled.div`
   align-items: center;
   height: 6vh;
 `;
+
+const ProfitTitle = styled.div`
+  font-family: Spoqa Han Sans Neo Light;
+`
 
 const ArrowStyle = styled.div`
   color: ${((props) => (Number(props.color) > 0 ? '#EF6363' : '#63C9EF')) || '#EF6363'};

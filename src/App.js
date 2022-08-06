@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import BackgroundLayout from './common/BackgroundLayout';
 import MenuNav from './common/MenuNav';
@@ -13,9 +13,11 @@ import { getItem } from './utils/cookies';
 import axios from 'axios';
 import { signIn, updateToken } from './modules/login';
 import CommunityPage from './pages/Communitypage/CommunityPage';
+import CreateAccountPage from './pages/home/presentational/CreateAccountPage';
 
 export default function App() {
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
+  const [menuVisibility, setMenuVisibility] = useState(true)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -76,6 +78,7 @@ export default function App() {
             <Route path="/fourth" element={<CommunityPage />} />
             <Route path="/fifth" element={'Settings page'} />
             <Route path="*" element={'404'} />
+            <Route path="/createAccount" element={<CreateAccountPage menuVisibility={menuVisibility}/>} />
           </>
         ) : (
           // route before login
@@ -86,7 +89,7 @@ export default function App() {
           </>
         )}
       </Routes>
-      {isLoggedIn && <MenuNav />}
+      {isLoggedIn && menuVisibility && <MenuNav />}
     </BackgroundLayout>
   );
 }

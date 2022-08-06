@@ -2,6 +2,8 @@ import { createGlobalStyle } from 'styled-components';
 import SpoqaHanSansNeo from '../fonts/spoqa/SpoqaHanSansNeo-Regular.woff2';
 import SpoqaHanSansNeoThin from '../fonts/spoqa/SpoqaHanSansNeo-Thin.woff2';
 import SpoqaHanSansNeoBold from '../fonts/spoqa/SpoqaHanSansNeo-Bold.woff2';
+import SpoqaHanSansNeoMedium from '../fonts/spoqa/SpoqaHanSansNeo-Medium.woff2';
+import SpoqaHanSansNeoLight from '../fonts/spoqa/SpoqaHanSansNeo-Light.woff2';
 
 const GlobalStyle = createGlobalStyle`
     @font-face {
@@ -10,12 +12,26 @@ const GlobalStyle = createGlobalStyle`
     }
 
     @font-face {
-      font-family: "Spoca Han Sans Neo";
+      font-family: "Spoca Han Sans Neo Thin";
+      font-weight: 100;
       src: url(${SpoqaHanSansNeoThin});
     }
 
     @font-face {
       font-family: "Spoca Han Sans Neo";
+      font-weight: 300;
+      src: url(${SpoqaHanSansNeoLight});
+    }
+
+    @font-face {
+      font-family: "Spoca Han Sans Neo";
+      font-weight: 500;
+      src: url(${SpoqaHanSansNeoMedium});
+    }
+
+    @font-face {
+      font-family: "Spoca Han Sans Neo";
+      font-weight: 700;
       src: url(${SpoqaHanSansNeoBold});
     }
 

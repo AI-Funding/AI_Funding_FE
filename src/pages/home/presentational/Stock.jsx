@@ -22,10 +22,13 @@ export default function Stock(props) {
 }
 
 const StockStyle = styled.div`
-  padding: 2vh;
-  flex-grow: 1;
-  justify-content: center;
-  align-items: center;
+  padding: 2vh 2vh 2vh 2vh;
+  height: 28vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: space-between;
 `;
 
 const CardTitle = styled.div`
@@ -33,10 +36,11 @@ const CardTitle = styled.div`
 `;
 
 const CardRow = styled.div`
+  height: 20vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4vh 6vw 4vh 6vw;
+  padding: 4% 6% 4% 6%;
 `;
 
 const CardName = styled.div`

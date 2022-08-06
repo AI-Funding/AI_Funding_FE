@@ -48,10 +48,10 @@ export default function Stocks(props) {
 }
 
 const NoStock = styled.div`
-  height: 30vh;
+  height: 28vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 100;
+  font-family: Spoqa Han Sans Neo Thin;
   font-size: 20px;
 `

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export default function CreateAccount(props) {
   return(
@@ -7,7 +8,7 @@ export default function CreateAccount(props) {
         <TempImg/>
         <IntroMsg>환영합니다 강연구님!<br/>하단의 버튼을 눌러 계좌를 생성해주세요!</IntroMsg>
       </IntroColumn>
-      <CreateBtn>계좌 생성하기</CreateBtn>
+      <CreateBtn to="/createAccount">계좌 생성하기</CreateBtn>
    </MyAccountStyle>
   )
 }
@@ -17,7 +18,6 @@ const MyAccountStyle = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 60vh;
   border: 1px solid #b8a88e;
   border-radius: 10px;
   padding: 1vh 1vh 2vh 1vh;
@@ -25,6 +25,7 @@ const MyAccountStyle = styled.div`
 `;
 
 const IntroColumn = styled.div`
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -33,8 +34,8 @@ const IntroColumn = styled.div`
 `
 const IntroMsg = styled.div`
   text-align: center;
+  font-weight: 100;
   font-family: Spoqa Han Sans Neo Thin;
-  font-weight: 200;
   font-size: 20px;
 `
 
@@ -45,17 +46,19 @@ const TempImg = styled.div`
   background-color: #ffffff;
 `
 
-const CreateBtn = styled.div`
+const CreateBtn = styled(Link)`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 95%;
-  height: 60px;
-  border-radius: 10px;
+  height: 63px;
+  border-radius: 15px;
   margin-bottom: 1vh;
   color: black;
+  font-family: Spoqa Han Sans Neo Bold;
+  font-weight: 600;
   font-size: 25px;
-  font-weight: 800;
+  text-decoration: none;
   background-color: #b8a88e;
 `

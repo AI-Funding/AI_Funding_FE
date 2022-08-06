@@ -68,48 +68,41 @@ export default function Home() {
 
   return (
     <HomeStyle>
-      <AccountContainer>
-        <Swiper
-          slidesPerView={1}
-          pagination={{
-            clickable: true,
-            type: 'bullets',
-            bulletClass: 'swiper-pagination-bullet swiper-pagination-bullet-custom',
-          }}
-          onSlideChange={(e) => {
-            setAccountNumber(e.activeIndex);
-          }}
-        >
-          {myAccountSlide}
-          <SwiperSlide>
-            <CreateAccount />
-          </SwiperSlide>
-        </Swiper>
-      </AccountContainer>
+      <Swiper
+        slidesPerView={1}
+        pagination={{
+          clickable: true,
+          type: 'bullets',
+          bulletClass: 'swiper-pagination-bullet swiper-pagination-bullet-custom',
+        }}
+        onSlideChange={(e) => {
+          setAccountNumber(e.activeIndex);
+        }}
+      >
+        {myAccountSlide}
+        <SwiperSlide>
+          <CreateAccount />
+        </SwiperSlide>
+      </Swiper>
       <StockContainer>
-      <Stocks
-        stock={stock}
-        account={accountNumber}
-        isLast={accountNumber == accounts.length ? true : false}
-      />
+        <Stocks
+          stock={stock}
+          account={accountNumber}
+          isLast={accountNumber == accounts.length ? true : false}
+        />
       </StockContainer>
     </HomeStyle>
   );
 }
 
 const HomeStyle = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   flex-grow: 1;
-  padding: 10px;
+  justify-content: space-between;
+  padding: 10px 10px 0px 10px;
   color: white;
 `;
 
-const AccountContainer = styled.div`
-  
-`
-
 const StockContainer = styled.div`
-  
-`
+  height: 28vh;
+  width: 100%;
+`;
