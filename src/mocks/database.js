@@ -210,6 +210,24 @@ const mock_check_profit = {
           createAt: '2022-02-08',
         },
       ],
+      profitDetailMore: [
+        {
+          creatAtProfitPersent: 12,
+          creatAtProfitWon: 3000,
+          creatAt: '2022-02-10',
+        },
+        {
+          creatAtProfitPersent: 13,
+          creatAtProfitWon: 4000,
+          creatAt: '2022-02-11',
+        },
+        {
+          creatAtProfitPersent: 14,
+          creatAtProfitWon: 4250,
+          creatAt: '2022-02-12',
+        },
+      ],
+
       createAt: '2022-03-04',
       stockList: [
         {
