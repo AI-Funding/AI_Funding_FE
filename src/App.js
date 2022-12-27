@@ -21,28 +21,28 @@ export default function App() {
   const [menuVisibility, setMenuVisibility] = useState(true)
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    try {
-      // automatically login logic
-      if (isLoggedIn === false) {
-        const hasRefresh = getItem('has_refresh');
-        if (hasRefresh === 'true') {
-          // request new access token with posting refresh token(cookie)
-          axios
-            .get(`${process.env.REACT_APP_API}/auth/token`, { withCredentials: true })
-            .then((response) => {
-              const { accessToken, UID } = response.data;
-              dispatch(signIn(accessToken, UID));
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        }
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }, [dispatch, isLoggedIn]);
+  // useEffect(() => {
+  //   try {
+  //     // automatically login logic
+  //     if (isLoggedIn === false) {
+  //       const hasRefresh = getItem('has_refresh');
+  //       if (hasRefresh === 'true') {
+  //         // request new access token with posting refresh token(cookie)
+  //         axios
+  //           .get(`${process.env.REACT_APP_API}/auth/token`, { withCredentials: true })
+  //           .then((response) => {
+  //             const { accessToken, UID } = response.data;
+  //             dispatch(signIn(accessToken, UID));
+  //           })
+  //           .catch((error) => {
+  //             console.error(error);
+  //           });
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }, [dispatch, isLoggedIn]);
 
   useEffect(() => {
     try {
@@ -83,7 +83,7 @@ export default function App() {
         ) : (
           // route before login
           <>
-            <Route path="/oauth" element={<Auth />} />
+            <Route path="/oauth/*" element={<Auth />} />
             <Route path="/sign-up" element={<RegisterForm />} />
             <Route path="*" element={<Login />} />
           </>
