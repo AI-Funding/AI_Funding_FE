@@ -1,25 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
 import Profit from './Profit';
+import aquaBadge from '../../../image/AquaF.svg'
 
 export default function MyAccount(props) {
   return (
-    <div>
       <MyAccountStyle>
-        <InfoRowStyle>
-          <InfoStyle>{props.name || 'default'}&nbsp;</InfoStyle>님의&nbsp;&nbsp;
-          <InfoStyle>{props.accountName || 'default'}</InfoStyle>
-          &nbsp;계좌입니다.
-        </InfoRowStyle>
+        
+        <Info>
+          <InfoRowStyle>
+            <InfoStyle>{props.name || 'default'}</InfoStyle>
+            <FixedText>님의&nbsp;</FixedText>
+            <InfoStyle>{props.accountName || 'default'}</InfoStyle>
+            <FixedText>계좌입니다.</FixedText>
+          </InfoRowStyle>
 
-        <div>투자 시작일로부터 + {getStartDay(props.startDay) || '00'}일</div>
+          <StartDay>투자 시작일로부터 + {getStartDay(props.startDay) || '00'}일</StartDay>
+        </Info>
 
-        <MoneyRowStyle>
-          <MoneyStyle>
-            {props.money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || '000,000'}
-          </MoneyStyle>
-          원
-        </MoneyRowStyle>
+        <Badge></Badge>
+
+        <MoneyContent>
+          <MoneyRowStyle>
+            <MoneyStyle>
+              {props.money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') || '000,000'}
+            </MoneyStyle>
+            <MoneyUnit>원</MoneyUnit>
+          </MoneyRowStyle>
+        </MoneyContent>
 
         <ProfitColumnStyle>
           <Profit name="금일 수익률" value={props.todayIncome || '0.00'} border="true"></Profit>
@@ -32,7 +40,6 @@ export default function MyAccount(props) {
           <Profit name="누적 수익금" value={props.totalProfit || '0'}></Profit>
         </ProfitColumnStyle>
       </MyAccountStyle>
-    </div>
   );
 }
 
@@ -45,30 +52,60 @@ const getStartDay = (createAt) => {
 
 /*스타일*/
 const MyAccountStyle = styled.div`
-  flex-grow: 1;
   border: 1px solid #b8a88e;
   border-radius: 10px;
-  padding: 1vh 1vh 2vh 1vh;
+  padding: 1vh 1vw 2vh 1vw;
   background-color: #000000;
 `;
 
+const Info = styled.div`
+  height: 10vh;
+  padding-top: 2vw;
+  padding-left: 4vw;
+`
+
+const Badge = styled.div`
+  background-image: url(${aquaBadge});
+  position: absolute;
+  top: 5vw;
+  right: 5vw;
+  width: 45px;
+  height: 45px;
+`
+
 const InfoRowStyle = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   font-size: 16px;
   font-weight: 300;
 `;
 
 const InfoStyle = styled.div`
+  font-family: Spoqa Han Sans Neo;
   font-size: 21px;
-  font-weight: 700;
+  font-weight: bold;
 `;
+
+const FixedText = styled.div`
+  font-family: Spoqa Han Sans Neo Light;
+  font-size: 16px;
+`
+
+const StartDay = styled.div`
+  font-family: Spoqa Han Sans Neo Light;
+  margin-Top: 20px;
+`
+
+const MoneyContent= styled.div`
+  display: flex;
+  height: 18vh;
+`
 
 const MoneyRowStyle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20vw;
+  flex-grow: 1;
   font-size: 32px;
   font-weight: regular;
 `;
@@ -78,11 +115,20 @@ const MoneyStyle = styled.div`
   font-weight: bold;
 `;
 
+const MoneyUnit = styled.div`
+  font-family: Spoqa Han Sans Neo Light;
+  font-size: 30px;
+  font-weight: 200;
+`
+
 const ProfitColumnStyle = styled.div`
-  margin: 10vw;
+  height: 15vh;
+  width: 78vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-left: 10vw;
+  margin-right: 10vw;
 `;
 
 const Line = styled.div`

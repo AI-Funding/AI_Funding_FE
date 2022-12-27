@@ -11,6 +11,7 @@ import 'swiper/css/pagination';
 /*페이지*/
 import MyAccount from './MyAccount';
 import Stocks from './Stocks';
+import CreateAccount from './CreateAccount';
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -43,7 +44,9 @@ export default function Home() {
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      setStock(accounts[accountNumber].stocks);
+      if (accountNumber < accounts.length) {
+        setStock(accounts[accountNumber].stocks);
+      }
     }
   }, [accountNumber]);
 
@@ -76,15 +79,29 @@ export default function Home() {
         }}
       >
         {myAccountSlide}
+        <SwiperSlide>
+          <CreateAccount name={data.nickname}/>
+        </SwiperSlide>
       </Swiper>
-
-      <Stocks stock={stock} account={accountNumber}></Stocks>
+      <StockContainer>
+        <Stocks
+          stock={stock}
+          account={accountNumber}
+          isLast={accountNumber == accounts.length ? true : false}
+        />
+      </StockContainer>
     </HomeStyle>
   );
 }
 
 const HomeStyle = styled.div`
   flex-grow: 1;
-  padding: 10px;
+  justify-content: space-between;
+  padding: 10px 10px 0px 10px;
   color: white;
+`;
+
+const StockContainer = styled.div`
+  height: 28vh;
+  width: 100%;
 `;
