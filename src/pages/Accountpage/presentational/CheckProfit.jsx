@@ -4,6 +4,8 @@ import SwiperCore, { EffectCoverflow, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Account from './Account';
 import { useState, useEffect, useRef } from 'react';
+import ErrorPage from '../../../common/ErrorPage';
+import LoadingPage from '../../../common/Loading';
 import axios from 'axios';
 import HitMapChart from './HitMapChart';
 
@@ -22,6 +24,8 @@ export default function CheckProfit() {
   const [todayProfitWon, setTodayProfitWon] = useState('');
   const [profitDetail, setProfitDetail] = useState([]);
   const [profitDetailMore, setProfitDetailMore] = useState([]);
+  const [networkError, setNetworkError] = useState(false);
+  const [loadingError, setLoadingError] = useState(false);
 
   useEffect(() => {
     axios
@@ -57,7 +61,6 @@ export default function CheckProfit() {
       setAIType(accounts[accountNumber].aiType);
       setCreateAt(accounts[accountNumber].createAt);
       setStockList(accounts[accountNumber].stockList);
-      //
       setTodayTotalBalance(accounts[accountNumber].todayTotalBalance);
       setTotalProfitWon(accounts[accountNumber].totalProfitWon);
       setTotalProfitPersent(accounts[accountNumber].totalProfitPersent);
@@ -67,6 +70,12 @@ export default function CheckProfit() {
       setProfitDetailMore(accounts[accountNumber].profitDetailMore);
     }
   }, [accountNumber]);
+
+  if (networkError === true) {
+    return <ErrorPage msg="networkError" />;
+  } else if (loadingError === true) {
+    return <LoadingPage />;
+  }
 
   const accountSlide = accounts.map((list, index) => (
     <SwiperSlide key={index}>
