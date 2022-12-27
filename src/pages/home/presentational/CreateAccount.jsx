@@ -6,7 +6,7 @@ export default function CreateAccount(props) {
     <MyAccountStyle>
       <IntroColumn>
         <TempImg/>
-        <IntroMsg>환영합니다 강연구님!<br/>하단의 버튼을 눌러 계좌를 생성해주세요!</IntroMsg>
+        <IntroMsg>환영합니다 {props.name}님!<br/>하단의 버튼을 눌러 계좌를 생성해주세요!</IntroMsg>
       </IntroColumn>
       <CreateBtn to="/createAccount">계좌 생성하기</CreateBtn>
    </MyAccountStyle>

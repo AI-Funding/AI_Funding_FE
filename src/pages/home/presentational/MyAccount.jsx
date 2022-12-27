@@ -54,7 +54,7 @@ const getStartDay = (createAt) => {
 const MyAccountStyle = styled.div`
   border: 1px solid #b8a88e;
   border-radius: 10px;
-  padding: 1vh 1vw 1vh 1vw;
+  padding: 1vh 1vw 2vh 1vw;
   background-color: #000000;
 `;
 
