@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {useState} from 'react';
+import { useState } from 'react';
 import Board from './Component/Board';
 import Read from './Read';
 import Write from './Write';
@@ -11,17 +11,16 @@ import { Routes, Route } from 'react-router-dom';
 
 */
 
-export default function CommunityPage(){
-
-    return(
-      <StyledCommunityPage className="community_page">
+export default function CommunityPage() {
+  return (
+    <StyledCommunityPage className="community_page">
       <Routes>
-        <Route path="" element ={ < Board />}></Route>
-        <Route path="Read/*" element={<Read />}></Route>
+        <Route path="" element={<Board />}></Route>
+        <Route path="Read/:key" element={<Read />}></Route>
         <Route path="Write" element={<Write />}></Route>
       </Routes>
-</StyledCommunityPage>
-    );
+    </StyledCommunityPage>
+  );
 }
 
 const StyledCommunityPage = styled.div`

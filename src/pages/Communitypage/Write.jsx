@@ -5,6 +5,7 @@ import { useRef, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { insertBoard } from '../../modules/board';
 
 /*
 
@@ -18,7 +19,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export default function Write(){
 
-    const navigate=useNavigate()
+    const navigate=useNavigate();
+    const dispatch = useDispatch();
+    const info = useSelector((list) =>list.board);
 
     //링크로 값 전달하는 코드
     const location =useLocation()
@@ -47,10 +50,12 @@ export default function Write(){
     setForm(nextForm);
   };
 
+  //이전 버튼 동작 함수
     const ClickpreviousBtn = () =>{ 
         navigate(-1);
     }
 
+    //확인 버튼
     const ClickOkBtn = () =>{
 
       if(Title===''||Content===''){
@@ -58,10 +63,10 @@ export default function Write(){
         return
       }
 
-      console.log(Class,Title,Content,"-->이걸로 보냅니다!")
-      
+      console.log(Class,Title,Content,"-->이걸로 보냅니다!");
+      dispatch(insertBoard({id:info.length+1,title:Title,date:'2022-1-1',heartNum:0,commentNum:0,content:Content,Writer:'gus',comments:[]}));
      
-      axios
+     /* axios
       .post('http://localhost:8080/', {
         post_type: Class,
         customer_info_id:1,
@@ -73,7 +78,7 @@ export default function Write(){
       })
       .catch((err) => {
         console.log('에러');
-      });
+      });*/
 
       navigate(-1);
     }
